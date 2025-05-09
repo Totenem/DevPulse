@@ -1,0 +1,14 @@
+.venv/
+data.json
+.env
+ngrok.yml
+ngrok_url.txt
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+*.pywz
+*.pyzw
