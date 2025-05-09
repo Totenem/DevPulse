@@ -1,7 +1,5 @@
 # DevPulse: A Bot for Real-Time Software Progress Tracking and Discord Reporting
 
-![Banner Image](https://imgur.com/a/YgqgJZx)
-
 
 DevPulse is an intelligent system that monitors GitHub repository activities and provides real-time updates through Discord.
 
