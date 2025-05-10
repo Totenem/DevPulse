@@ -75,29 +75,65 @@ pip install -r requirements.txt
        - Read Message History
        - View Channels
    - Use the generated URL to invite the bot to your server
-   - Right-click the channel where you want updates and copy the Channel ID (Developer Mode must be enabled in Discord settings)
+   - Enable Developer Mode in Discord:
+     - Open Discord Settings > App Settings > Advanced
+     - Toggle on "Developer Mode"
+   - Right-click the channel where you want updates and copy the Channel ID
    - Add the Channel ID to your `.env` file as `DISCORD_CHANNEL_ID`
 
-3. **Set Up ngrok Configuration**
-   Create `ngrok.yml` in the root directory:
+3. **Set Up GitHub Access**
+   - Go to GitHub Settings > Developer settings > Personal access tokens
+   - Click "Generate new token" (classic)
+   - Give it a descriptive name
+   - Select scopes:
+     - `repo` (full control of private repositories)
+     - `admin:repo_hook` (for webhook management)
+   - Copy the generated token and add it to your `.env` file as `GITHUB_TOKEN`
+
+4. **Set Up ngrok Configuration**
+   - Sign up for a free account at [ngrok](https://ngrok.com)
+   - Get your authtoken from the ngrok dashboard
+   - Create `ngrok.yml` in the root directory:
    ```yaml
    version: 2
    authtoken: your-ngrok-authtoken
    region: us
    ```
 
-4. **Configure GitHub Webhook**
+5. **Configure GitHub Webhook**
+   - Start ngrok first:
+     ```bash
+     ngrok http 8000
+     ```
+   - Copy the generated HTTPS URL (e.g., https://xxxx-xx-xx-xxx-xx.ngrok.io)
    - Go to your repository settings
    - Navigate to Webhooks > Add webhook
+   - Payload URL: `<ngrok-url>/webhook`
    - Set Content type to `application/json`
+   - Set Secret (optional but recommended)
    - Enable SSL verification
-   - Select events you want to track
+   - Select events to track:
+     - Push events
+     - Pull requests
+     - Issues
+   - Save the webhook
+   - Copy the webhook ID from the URL and add it to your `.env` file as `GITHUB_HOOK_ID`
 
 ### Step 5: Start the System
+1. Start ngrok in a separate terminal:
 ```bash
-# Start the webhook server
+ngrok http 8000
+```
+
+2. Start the webhook server in another terminal:
+```bash
 uvicorn webhook.webhook:app --reload --reload-dir webhook
 ```
+
+The system should now be running and ready to:
+- Receive GitHub webhook events
+- Process repository activities
+- Send updates to your Discord channel
 
 ## 🤝 How to Contribute
 
