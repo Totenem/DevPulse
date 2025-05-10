@@ -1,10 +1,6 @@
 # DevPulse: A Bot for Real-Time Software Progress Tracking and Discord Reporting
 
-
 DevPulse is an intelligent system that monitors GitHub repository activities and provides real-time updates through Discord.
-
-You can invite the bot to your server by clicking the link below:
-[Invite the Discord Bot](https://discord.com/oauth2/authorize?client_id=1370148788571738213&permissions=68608&integration_type=0&scope=bot)
 
 ## 🌟 Key Features
 
@@ -63,7 +59,26 @@ pip install -r requirements.txt
    DISCORD_CHANNEL_ID=your-channel-id
    ```
 
-2. **Set Up ngrok Configuration**
+2. **Set Up Discord Bot**
+   - Go to [Discord Developer Portal](https://discord.com/developers/applications)
+   - Click "New Application" and give it a name
+   - Go to the "Bot" section and click "Add Bot"
+   - Copy the bot token and add it to your `.env` file as `DISCORD_TOKEN`
+   - Under "Privileged Gateway Intents", enable:
+     - Presence Intent
+     - Server Members Intent
+     - Message Content Intent
+   - Go to OAuth2 > URL Generator
+     - Select "bot" under Scopes
+     - Select required permissions: 
+       - Send Messages
+       - Read Message History
+       - View Channels
+   - Use the generated URL to invite the bot to your server
+   - Right-click the channel where you want updates and copy the Channel ID (Developer Mode must be enabled in Discord settings)
+   - Add the Channel ID to your `.env` file as `DISCORD_CHANNEL_ID`
+
+3. **Set Up ngrok Configuration**
    Create `ngrok.yml` in the root directory:
    ```yaml
    version: 2
@@ -71,7 +86,7 @@ pip install -r requirements.txt
    region: us
    ```
 
-3. **Configure GitHub Webhook**
+4. **Configure GitHub Webhook**
    - Go to your repository settings
    - Navigate to Webhooks > Add webhook
    - Set Content type to `application/json`
